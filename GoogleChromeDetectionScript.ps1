@@ -40,17 +40,15 @@ function Write-LogEntry {
 	}
 }
 
-$LogFileName = "M365AppsSetup.log"
-Write-LogEntry -Value "Start Office Install detection logic" -Severity 1
+$LogFileName = "GoogleAppsSetup.log"
+Write-LogEntry -Value "Start Chrome Install detection logic" -Severity 1
 $RegistryKeys = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-$M365Apps = "Microsoft 365 Apps"
-# $M365AppsCheck = $RegistryKeys | Where-Object { $_.GetValue("DisplayName") -match $M365Apps } // Commented out as issues found
-$M365AppsCheck = $RegistryKeys | Get-ItemProperty | Where-Object { $_.DisplayName -match $M365Apps }
-if ($M365AppsCheck) {
-    Write-LogEntry -Value "Microsoft 365 Apps detected OK" -Severity 1
-    Write-Output "Microsoft 365 Apps Detected"
+$GoogleChromeCheck = $RegistryKeys | Get-ItemProperty | Where-Object { $_.DisplayName -match "Google Chrome" }
+if ($GoogleChromeCheck) {
+    Write-LogEntry -Value "Google Chrome detected OK" -Severity 1
+    Write-Output "Google Chrome Detected"
 	Exit 0
    }else{
-    Write-LogEntry -Value "Microsoft 365 Apps not detected" -Severity 2
+    Write-LogEntry -Value "Google Chrome not detected" -Severity 2
     Exit 1
 }
